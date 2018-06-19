@@ -4,24 +4,34 @@ import queue
 class Solution:
     def calculate(self, s):
         num_q = queue.LifoQueue()
-        num_q.put(0)
         sign_q = queue.LifoQueue()
         num = 0
-        for c in s:
-            if c in ['*', "/", '+', "-"]:
-                num_q.put(0)
-                if c == "-":
-                    num_q.put(-1 * num)
-                if c == '+':
-                    num_q.put(num)
-            else:
+        op = ''
+        for i,c in enumerate(s):
+            if c.isnumeric():
                 num = num*10 + int(c)
-        return sum(num_q)
+            if c in ['*', "/", '+', "-"] or i == len(s)-1:
+                if op == "-":
+                    num = -1 * num
+                if op == '+':
+                    num = num
+                if op=='*':
+                    num = int(num_q.get() * num)
+                if op=='/':
+                    num = int(num_q.get() / num)
+                op = c
+                num_q.put(num)
+                num = 0
+            
+        
+        while not num_q.empty():
+            num += num_q.get()
+        return int(num)
     
 
 def main():
     sol = Solution()
-    print(sol.calculate("14/3*2"))
+    print(sol.calculate("14-3/2"))
 
 
 if __name__ == "__main__":
