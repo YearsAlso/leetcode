@@ -4,7 +4,6 @@ import queue
 class Solution:
     def calculate(self, s):
         num_q = queue.LifoQueue()
-        sign_q = queue.LifoQueue()
         num = 0
         op = ''
         for i,c in enumerate(s):

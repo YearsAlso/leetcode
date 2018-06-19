@@ -5,9 +5,12 @@ class Solution:
         :type k: int
         :rtype: List[int]
         """
+        if len(nums) == 0 or k==0:
+            return []
+        nums.append(-65536)
         list_num = []
         for i in range(k,len(nums)):
-            list_num.append(max(nums[i-k:i+1]))
+            list_num.append(max(nums[i-k:i]))
         return list_num
     
 sol = Solution()
